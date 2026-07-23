@@ -13,6 +13,7 @@ def limp():
     os.system('cls')
 
 def cadastro():
+    limp()
     nome = input("Cadastro do Usuário \n Digite o nome: ")
     print(f"Bem-vindo(a), {nome}! \n seus atributos iniciais são: ")
     print(mA())
@@ -35,6 +36,10 @@ def AddP(p, vida, forca, velocidade, inteligencia, resistencia):
         qP = int(input("Quantos pontos deseja adicionar?\n"))
         if qP > p:
             print("Você não possui pontos suficientes. Tente novamente.")
+            time.sleep(1.5)
+            continue
+        elif qP < 0:
+            print("Você não pode adicionar pontos negativos. Tente novamente.")
             time.sleep(1.5)
             continue
         elif escolha == "1":
