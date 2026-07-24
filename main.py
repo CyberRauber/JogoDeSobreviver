@@ -13,10 +13,18 @@ sede = 100
 xp = 0
 nivel = 0
 
-def attNiveis(xp, nivel): # Atualiza o nivel do personagem
+pedra = classes.criar_item("pedra", "recurso", 0, "construção", 0)
+madeira = classes.criar_item("madeira", "recurso", 0, "construção", 0)
+pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
+aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
+
+
+
+def attNiveis(p, xp, nivel): # Atualiza o nivel do personagem
     if xp >= 100:
         nivel += 1
         xp -= 100
+        p+=5
         print(f"Parabéns! Você subiu para o nível {nivel}!")
     return xp, nivel
 
@@ -123,7 +131,6 @@ def main(): # Onde o jogo começa
         print(".", end="", flush=True)
         time.sleep(0.7)
     
-
 
 cadastro()
 AddP(p, vida, forca, velocidade, inteligencia, resistencia)

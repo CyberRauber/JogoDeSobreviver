@@ -67,7 +67,8 @@ def mostrar_inventario(inventario):#mostra os recursos e itens do inventario
     for item in itens:
         print(f"{item['nome']} --> {item['quantidade']} unidades")
 
-def inventario_vazio(inventario):#ve se o inventario esta vazio
+
+def inventario_vazio(inventario): # Vê se o inventario esta vazio
     if len(inventario) == 0:
         return "O inventário está vazio."
     else:
