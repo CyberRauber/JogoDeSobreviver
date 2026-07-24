@@ -71,7 +71,7 @@ def inventario_vazio(inventario):#ve se o inventario esta vazio
     if len(inventario) == 0:
         return "O inventário está vazio."
     else:
-        return "O inventário possui itens."
+        return mostrar_inventario(inventario)
     
 def adicionar_item_inventario(inventario, item):
     pass
