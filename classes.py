@@ -47,3 +47,34 @@ def criar_recurso(nome, tipo, efeito, valorEf):
         "efeito": efeito,
         "valorEf": valorEf
     }
+
+def recursos_itens_inventario(inventario):
+    recursos = []
+    itens = []
+    for item in inventario:
+        if item["tipo"] == "recurso":
+            recursos.append(item)
+        else:
+            itens.append(item)
+    return recursos, itens
+
+def mostrar_inventario(inventario):#mostra os recursos e itens do inventario
+    recursos, itens = recursos_itens_inventario(inventario)
+    print("Recursos:")
+    for recurso in recursos:
+        print(f"{recurso['nome']} --> {recurso['quantidade']} unidades")
+    print("\nItens:")
+    for item in itens:
+        print(f"{item['nome']} --> {item['quantidade']} unidades")
+
+def inventario_vazio(inventario):#ve se o inventario esta vazio
+    if len(inventario) == 0:
+        return "O inventário está vazio."
+    else:
+        return "O inventário possui itens."
+    
+def adicionar_item_inventario(inventario, item):
+    pass
+
+def usar_item_inventario(inventario, item):
+    pass
