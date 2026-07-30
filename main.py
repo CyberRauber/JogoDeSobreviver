@@ -8,7 +8,7 @@ def mostrar_historia(nome):
     if pular_historia.lower() == "s":
         print("História pulada.")
         return
-    historia = cores.coresT.azul(f"""# O Último Sobrevivente
+    historia = (f"""# O Último Sobrevivente
 
 Tudo começou com uma doença.
 
@@ -42,7 +42,7 @@ Também não lembra como chegou até ali.
 
 Sua última lembrança é confusa: pessoas correndo, tiros ao longe, sirenes, alguém gritando...
 
-"{cores.coresT.vermelho(nome)}!"
+"{cores.vermelhoT(nome)}!"
 
 Depois disso...
 
@@ -56,7 +56,7 @@ Você tenta lembrar de alguma coisa, mas tudo parece distante, como um sonho esq
 
 Uma voz ecoa em sua mente.
 
-"Meu nome é... {nome}."
+"Meu nome é... {cores.vermelhoT(nome)}."
 
 É a única certeza que você tem.
 
@@ -90,7 +90,7 @@ Dentro dela há apenas uma garrafa de água quase vazia, uma lanterna fraca e um
 
 Na primeira página está escrito à mão:
 
-**"Se você encontrou isto, significa que ainda há esperança. Continue vivendo, {nome}. Não importa o que aconteça... não pare."**
+**"Se você encontrou isto, significa que ainda há esperança. Continue vivendo, {cores.vermelhoT(nome)}. Não importa o que aconteça... não pare."**
 
 Você vira rapidamente as outras páginas.
 
@@ -124,7 +124,7 @@ Não é um cientista.
 
 Não conhece uma cura.
 
-Você é apenas {nome}.
+Você é apenas {cores.vermelhoT(nome)}.
 
 E, neste mundo, isso terá que ser suficiente.
 
@@ -140,8 +140,10 @@ Ou até que você descubra a verdade por trás do vírus.
 """)
     for letra in historia:
         print(letra, end="", flush=True)
-        time.sleep(0.04)
-
+        time.sleep(0.01)
+    entrar = input("\n\nPressione Enter para continuar...")
+    if entrar == "":
+        limp()
 
 p = 25 # Pontos
 vida = classes.vida
@@ -158,8 +160,6 @@ pedra = classes.criar_item("pedra", "recurso", 0, "construção", 0)
 madeira = classes.criar_item("madeira", "recurso", 0, "construção", 0)
 pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
 aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
-
-
 
 def attNiveis(p, xp, nivel): # Atualiza o nivel do personagem
     if xp >= 100:
@@ -187,12 +187,27 @@ def mA(): # Mostra Atributos
 
 def cadastro(): #Cadastro
     limp()
-    nome = input("Cadastro do Usuário \n Digite o nome: ")
+    while True:
+        nome = input("Cadastro do Usuário \n Digite o nome: ")
+        if nome == "":
+            print("Nome inválido. Tente novamente.")
+            time.sleep(1)
+        elif len(nome) < 3:
+            print("O nome deve ter pelo menos 3 caracteres. Tente novamente.")
+            time.sleep(1)
+            limp()
+            continue
+        elif len(nome) > 20:
+            print("O nome deve ter no máximo 20 caracteres. Tente novamente.")
+            time.sleep(1)
+            limp()
+            continue
+        else:
+            break
+    nome.strip()
     limp()
     mostrar_historia(nome)
-    time.sleep(1)
-    limp()
-    print(f"\nBem-vindo(a), {nome}! \n seus atributos iniciais são: ")
+    print(f"\nBem-vindo(a), {cores.vermelhoT(nome)}! \n seus atributos iniciais são: ")
     print(mA())
     
 
