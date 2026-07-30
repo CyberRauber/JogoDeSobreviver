@@ -12,7 +12,7 @@ def mostrar_historia(nome):
 
 Tudo começou com uma {cores.amareloT("doença")}.
 
-No início, parecia apenas mais um {cores.verdeT("Vírus")}. Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
+    No início, parecia apenas mais um {cores.verdeT("Vírus")}. O chamado {cores.verdeT("Vírus Mossila")} Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
 
 Os governos afirmavam que tudo estava sob controle.
 
