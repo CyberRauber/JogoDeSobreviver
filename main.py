@@ -8,23 +8,23 @@ def mostrar_historia(nome):
     if pular_historia.lower() == "s":
         print("História pulada.")
         return
-    historia = (f"""# O Último Sobrevivente
+    historia = (f""" O Último Sobrevivente
 
-Tudo começou com uma doença.
+Tudo começou com uma {cores.amareloT("doença")}.
 
-No início, parecia apenas mais um vírus. Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
+No início, parecia apenas mais um {cores.verdeT("Vírus")}. Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
 
 Os governos afirmavam que tudo estava sob controle.
 
 Não estava.
 
-O vírus sofria mutações em uma velocidade impossível. Pessoas aparentemente saudáveis podiam carregar a infecção por dias sem apresentar sintomas. Quando eles finalmente apareciam, já era tarde demais.
+O {cores.verdeT("Vírus")} sofria mutações em uma velocidade impossível. Pessoas aparentemente saudáveis podiam carregar a infecção por dias sem apresentar sintomas. Quando eles finalmente apareciam, já era tarde demais.
 
 A mente desaparecia.
 
 Restava apenas um corpo movido por instintos violentos.
 
-As grandes cidades foram as primeiras a cair. A energia elétrica falhou, redes de comunicação deixaram de funcionar e o abastecimento de água e alimentos entrou em colapso. Milhões morreram. Outros milhões foram infectados.
+As grandes cidades foram as primeiras a cair. A energia elétrica falhou, redes de comunicação deixaramde funcionar e o abastecimento de água e alimentos entrou em colapso. Milhões morreram. Outros milhões foram infectados.
 
 Quem sobreviveu precisou abandonar tudo.
 
@@ -90,7 +90,7 @@ Dentro dela há apenas uma garrafa de água quase vazia, uma lanterna fraca e um
 
 Na primeira página está escrito à mão:
 
-**"Se você encontrou isto, significa que ainda há esperança. Continue vivendo, {cores.vermelhoT(nome)}. Não importa o que aconteça... não pare."**
+"Se você encontrou isto, significa que ainda há esperança. Continue vivendo, {cores.vermelhoT(nome)}. Não importa o que aconteça... não pare."
 
 Você vira rapidamente as outras páginas.
 
@@ -136,8 +136,9 @@ Depois mais um.
 
 Até que não reste mais ninguém...
 
-Ou até que você descubra a verdade por trás do vírus.
+Ou até que você descubra a verdade por trás do {cores.verdeT("Vírus")}.
 """)
+    
     for letra in historia:
         print(letra, end="", flush=True)
         time.sleep(0.01)
@@ -188,10 +189,12 @@ def mA(): # Mostra Atributos
 def cadastro(): #Cadastro
     limp()
     while True:
-        nome = input("Cadastro do Usuário \n Digite o nome: ")
-        if nome == "":
+        nome = input("Cadastro do Usuário \n Digite o nome: ").strip()
+        if nome == "" or nome in "                                    ":
             print("Nome inválido. Tente novamente.")
             time.sleep(1)
+            limp()
+            continue
         elif len(nome) < 3:
             print("O nome deve ter pelo menos 3 caracteres. Tente novamente.")
             time.sleep(1)
@@ -204,7 +207,6 @@ def cadastro(): #Cadastro
             continue
         else:
             break
-    nome.strip()
     limp()
     mostrar_historia(nome)
     print(f"\nBem-vindo(a), {cores.vermelhoT(nome)}! \n seus atributos iniciais são: ")
