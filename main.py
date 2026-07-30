@@ -1,6 +1,147 @@
 import classes
 import os
 import time
+import cores
+
+def mostrar_historia(nome):
+    pular_historia = input("Deseja pular a história? (s/n): ").lower()
+    if pular_historia.lower() == "s":
+        print("História pulada.")
+        return
+    historia = cores.coresT.azul(f"""# O Último Sobrevivente
+
+Tudo começou com uma doença.
+
+No início, parecia apenas mais um vírus. Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
+
+Os governos afirmavam que tudo estava sob controle.
+
+Não estava.
+
+O vírus sofria mutações em uma velocidade impossível. Pessoas aparentemente saudáveis podiam carregar a infecção por dias sem apresentar sintomas. Quando eles finalmente apareciam, já era tarde demais.
+
+A mente desaparecia.
+
+Restava apenas um corpo movido por instintos violentos.
+
+As grandes cidades foram as primeiras a cair. A energia elétrica falhou, redes de comunicação deixaram de funcionar e o abastecimento de água e alimentos entrou em colapso. Milhões morreram. Outros milhões foram infectados.
+
+Quem sobreviveu precisou abandonar tudo.
+
+Famílias foram separadas. Amigos desapareceram. Cidades inteiras tornaram-se cemitérios silenciosos.
+
+Meses depois, a natureza começou a recuperar o que era seu. Árvores cresceram entre o asfalto, prédios foram cobertos por plantas e o silêncio tomou conta das ruas.
+
+Mas o silêncio era enganoso.
+
+Em qualquer esquina, dentro de qualquer casa ou escondido em qualquer floresta, algo podia estar esperando.
+
+Você não sabe quanto tempo se passou.
+
+Também não lembra como chegou até ali.
+
+Sua última lembrança é confusa: pessoas correndo, tiros ao longe, sirenes, alguém gritando...
+
+"{cores.coresT.vermelho(nome)}!"
+
+Depois disso...
+
+Escuridão.
+
+Seus olhos se abrem lentamente.
+
+Sua cabeça dói.
+
+Você tenta lembrar de alguma coisa, mas tudo parece distante, como um sonho esquecido.
+
+Uma voz ecoa em sua mente.
+
+"Meu nome é... {nome}."
+
+É a única certeza que você tem.
+
+Você se levanta com dificuldade.
+
+O abrigo onde acordou está abandonado. Há poeira sobre os móveis, alimentos vencidos e marcas de sangue espalhadas pelo chão. A porta principal está entreaberta, balançando lentamente com o vento.
+
+Lá fora, o mundo parece morto.
+
+Nenhuma voz.
+
+Nenhum carro.
+
+Nenhuma fumaça no horizonte.
+
+Apenas o som do vento atravessando prédios vazios e o ranger distante de estruturas prestes a desabar.
+
+Você respira fundo.
+
+— Ainda estou vivo...
+
+Mas por quanto tempo?
+
+Você caminha alguns passos para fora do abrigo.
+
+A rua está coberta por carros enferrujados, placas caídas e vegetação tomando conta do asfalto.
+
+Uma mochila velha está jogada próxima à entrada.
+
+Dentro dela há apenas uma garrafa de água quase vazia, uma lanterna fraca e um pequeno caderno.
+
+Na primeira página está escrito à mão:
+
+**"Se você encontrou isto, significa que ainda há esperança. Continue vivendo, {nome}. Não importa o que aconteça... não pare."**
+
+Você vira rapidamente as outras páginas.
+
+Todas estão em branco.
+
+Um arrepio percorre seu corpo.
+
+Quem escreveu aquilo?
+
+Como essa pessoa sabia seu nome?
+
+Antes que consiga pensar em uma resposta...
+
+Um grunhido quebra o silêncio.
+
+Depois outro.
+
+E outro.
+
+Algo está se movendo entre os carros abandonados.
+
+Você prende a respiração.
+
+O mundo não acabou.
+
+Ele apenas pertence a outra coisa agora.
+
+Você não é um soldado.
+
+Não é um cientista.
+
+Não conhece uma cura.
+
+Você é apenas {nome}.
+
+E, neste mundo, isso terá que ser suficiente.
+
+Seu único objetivo é sobreviver.
+
+Mais um dia.
+
+Depois mais um.
+
+Até que não reste mais ninguém...
+
+Ou até que você descubra a verdade por trás do vírus.
+""")
+    for letra in historia:
+        print(letra, end="", flush=True)
+        time.sleep(0.04)
+
 
 p = 25 # Pontos
 vida = classes.vida
@@ -47,6 +188,10 @@ def mA(): # Mostra Atributos
 def cadastro(): #Cadastro
     limp()
     nome = input("Cadastro do Usuário \n Digite o nome: ")
+    limp()
+    mostrar_historia(nome)
+    time.sleep(1)
+    limp()
     print(f"\nBem-vindo(a), {nome}! \n seus atributos iniciais são: ")
     print(mA())
     
