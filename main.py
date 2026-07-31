@@ -8,11 +8,11 @@ def mostrar_historia(nome):
     if pular_historia.lower() == "s":
         print("História pulada.")
         return
-    historia = (f""" O Último Sobrevivente
+    historia = (f""" O ÚLTIMO SOBREVIVENTE
 
 Tudo começou com uma {cores.amareloT("doença")}.
 
-    No início, parecia apenas mais um {cores.verdeT("Vírus")}. O chamado {cores.verdeT("Vírus Mossila")} Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
+    No início, parecia apenas mais um {cores.verdeT("Vírus")}. O chamado {cores.verdeT("Vírus Nossila")} Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
 
 Os governos afirmavam que tudo estava sob controle.
 
@@ -174,7 +174,7 @@ pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
 aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
 
 def limp():
-    os.system('cls')
+    os.system('clear' if os.name != 'nt' else 'cls')
 
 def mA(): # Mostra Atributos
     return f"""
@@ -189,7 +189,7 @@ def mA(): # Mostra Atributos
 def cadastro(): #Cadastro
     limp()
     while True:
-        nome = input("Cadastro do Usuário \n Digite o nome: ").strip()
+        nome = input("Cadastro do Usuário \nDigite seu nome de jogador: ").strip()
         if nome == "" or nome in "                                    ":
             print("Nome inválido. Tente novamente.")
             time.sleep(1)

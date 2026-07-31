@@ -51,12 +51,13 @@ def criar_recurso(nome, tipo, efeito, valorEf):
 def recursos_itens_inventario(inventario):
     recursos = []
     itens = []
+    inventario = recursos + itens
     for item in inventario:
         if item["tipo"] == "recurso":
             recursos.append(item)
         else:
             itens.append(item)
-    return recursos, itens
+    return inventario
 
 def mostrar_inventario(inventario):#mostra os recursos e itens do inventario
     recursos, itens = recursos_itens_inventario(inventario)
@@ -73,9 +74,24 @@ def inventario_vazio(inventario): # Vê se o inventario esta vazio
         return "O inventário está vazio."
     else:
         return mostrar_inventario(inventario)
-    
-def adicionar_item_inventario(inventario, item):
+
+#------------------------------------------------------------------------------------------------------#
+#---------------------------------precisa ver direito oq fazer aq--------------------------------------#
+#----------------------------------------------|-------------------------------------------------------#
+#----------------------------------------------v-------------------------------------------------------#
+
+def itens_aleatórios():#!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a ideia é ter varias funçoes dentro dessa, 
+    #cada outra função com um item aleatório encontrado durante a história
     pass
 
-def usar_item_inventario(inventario, item):
+def adicionar_item_inventario(inventario, item):#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    item = input("Deseja adicionar este item ao seu inventário?(S/N)\n").upper()
+    if item == "S":
+        recursos_itens_inventario(inventario) + itens_aleatórios()
+    elif item == "N":
+        return
+    else:
+        print("Opção inválida, tente novamente.")
+
+def usar_item_inventario(inventario, item):#?
     pass
