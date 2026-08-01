@@ -67,6 +67,7 @@ def mostrar_inventario(inventario):#mostra os recursos e itens do inventario
     print("\nItens:")
     for item in itens:
         print(f"{item['nome']} --> {item['quantidade']} unidades")
+    return recursos_itens_inventario
 
 
 def inventario_vazio(inventario): # Vê se o inventario esta vazio
@@ -85,13 +86,17 @@ def itens_aleatórios():#!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a ideia é ter varias fun
     pass
 
 def adicionar_item_inventario(inventario, item):#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    item = input("Deseja adicionar este item ao seu inventário?(S/N)\n").upper()
-    if item == "S":
-        recursos_itens_inventario(inventario) + itens_aleatórios()
-    elif item == "N":
-        return
-    else:
-        print("Opção inválida, tente novamente.")
+    while True:
+        item = input("Deseja adicionar este item ao seu inventário?(S/N)\n").upper()
+        inventario_atualizado = recursos_itens_inventario(inventario).append(itens_aleatórios())
+        if item == "S":
+            print(inventario_atualizado)
+            return inventario_atualizado
+        elif item == "N":
+            break
+        else:
+            print("Opção inválida, tente novamente.")
+            return
 
 def usar_item_inventario(inventario, item):#?
     pass
