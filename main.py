@@ -161,6 +161,7 @@ pedra = classes.criar_item("pedra", "recurso", 0, "construção", 0)
 madeira = classes.criar_item("madeira", "recurso", 0, "construção", 0)
 pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
 aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
+feijao = classes.criar_recurso("feijão", "comida", "restaura 20 de fome", 20)
 
 def attNiveis(p, xp, nivel): # Atualiza o nivel do personagem
     if xp >= 100:
@@ -213,7 +214,7 @@ def cadastro(): #Cadastro
     print(mA())
     
 
-def AddP(p, vida, forca, velocidade, inteligencia, resistencia): #Adiciona pontos aos atributos do personagem
+def AddP(p, vida, forca, velocidade, inteligencia, resistencia, nome): #Adiciona pontos aos atributos do personagem
     if p <= 0:
         print("Você não possui pontos para distribuir.")
         return
@@ -274,18 +275,23 @@ def AddP(p, vida, forca, velocidade, inteligencia, resistencia): #Adiciona ponto
         else:
             print("Opção inválida. Tente novamente.")
             time.sleep(1)
-    return
+    menu(nome)
 
-def menu():
+def menu(nome):
     print("""
     MENU PRINCIPAL
     1 - Começar o jogo
     2 - Mostrar Atributos
+    3 - Mostrar história
+    4 - 
     0 - Sair
 """)
+    r = input("Escolha uma opção: ")
+    if r == "1":
+        main()
+    elif r == "3":
+        mostrar_historia(nome)
 
-
-    
 def main(): # Onde o jogo começa
     limp()
     print("Iniciando jogo!")
@@ -296,4 +302,4 @@ def main(): # Onde o jogo começa
 
 cadastro()
 AddP(p, vida, forca, velocidade, inteligencia, resistencia)
-main()
+menu()
