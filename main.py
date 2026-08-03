@@ -156,6 +156,14 @@ fome = 100
 sede = 100
 xp = 0
 nivel = 0
+xpmax = 100
+
+zFraco = classes.zFraco
+zMedio = classes.zMedio
+zForte = classes.zForte
+boss1 = classes.boss1
+boss2 = classes.boss2
+bossFinal = classes.bossFinal
 
 pedra = classes.criar_item("pedra", "recurso", 0, "construção", 0)
 madeira = classes.criar_item("madeira", "recurso", 0, "construção", 0)
@@ -163,11 +171,12 @@ pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
 aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
 feijao = classes.criar_recurso("feijão", "comida", "restaura 20 de fome", 20)
 
-def attNiveis(p, xp, nivel): # Atualiza o nivel do personagem
-    if xp >= 100:
+def attNiveis(p, xp, xpmax, nivel): # Atualiza o nivel do personagem
+    if xp >= xpmax:
         nivel += 1
-        xp -= 100
+        xp -= xpmax
         p+=5
+        xpmax = (xpmax + 15)*1.15
         print(f"Parabéns! Você subiu para o nível {nivel}!")
     return xp, nivel
 
@@ -280,10 +289,10 @@ def AddP(p, vida, forca, velocidade, inteligencia, resistencia, nome): #Adiciona
 def menu(nome):
     print("""
     MENU PRINCIPAL
-    1 - Começar o jogo
+    1 - Continuar o jogo
     2 - Mostrar Atributos
     3 - Mostrar história
-    4 - 
+    4 - Craftar Item
     0 - Sair
 """)
     r = input("Escolha uma opção: ")
@@ -292,6 +301,37 @@ def menu(nome):
     elif r == "3":
         mostrar_historia(nome)
 
+def menuEscolha():
+    print("""
+
+
+
+
+
+
+""")
+
+
+
+def menuEscolhaBatalha():
+    print("""
+    MENU DE ESCOLHAS
+    1 - Atacar
+    2 - Fugir/Correr
+    3 - Se fingir de Morto
+    4 - Tentar se esconder
+""")
+    r = input("Escolha uma opção: ")
+    if r == "1":
+        pass
+    elif r == "2":
+        pass
+    elif r == "3":
+        pass
+    elif r == "4":
+        pass
+    elif r == "0":
+        menu()
 def main(): # Onde o jogo começa
     limp()
     print("Iniciando jogo!")
