@@ -81,14 +81,14 @@ def inventario_vazio(inventario): # Vê se o inventario esta vazio
 #----------------------------------------------|-------------------------------------------------------#
 #----------------------------------------------v-------------------------------------------------------#
 
-def itens_aleatórios():#!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a ideia é ter varias funçoes dentro dessa, 
-    #cada outra função com um item aleatório encontrado durante a história
+def itens_aleatórios():#!!!!!!!!!!!!!!!!!!!!!!!!!!!!! a ideia é ter varias funçoes dentro dessa, #cada outra função com um item aleatório encontrado durante a história
     pass
 
 def adicionar_item_inventario(inventario, item):#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while True:
         item = input("Deseja adicionar este item ao seu inventário?(S/N)\n").upper()
-        inventario_atualizado = recursos_itens_inventario(inventario).append(itens_aleatórios())
+        inventario_atualizado = recursos_itens_inventario(inventario)
+        inventario_atualizado.append(itens_aleatórios())
         if item == "S":
             print(inventario_atualizado)
             return inventario_atualizado
@@ -98,5 +98,9 @@ def adicionar_item_inventario(inventario, item):#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             print("Opção inválida, tente novamente.")
             return
 
-def usar_item_inventario(inventario, item):#?
-    pass
+def usar_item_inventario(inventario, item):
+    if item in inventario:
+        inventario.remove(item)
+        print(f"{item['nome']} foi usado.")
+    else:
+        print(f"{item['nome']} não está no inventário.")
