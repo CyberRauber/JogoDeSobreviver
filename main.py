@@ -1,11 +1,14 @@
 import classes
-import os
 import time
 import cores
+import acoes
+import inventario
+import itens
+import utils
 
 def mostrar_historia(nome):
     pular_historia = input("Deseja pular a história? (s/n): ").lower()
-    if pular_historia.lower() == "s":
+    if pular_historia == "s":
         print("História pulada.")
         return
     historia = (f""" O ÚLTIMO SOBREVIVENTE
@@ -139,9 +142,7 @@ Até que não reste mais ninguém...
 Ou até que você descubra a verdade por trás do {cores.verdeT("Vírus")}.
 """)
     
-    for letra in historia:
-        print(letra, end="", flush=True)
-        time.sleep(0.01)
+    utils.mostrar_texto_com_delay(historia, 0.01)
     entrar = input("\n\nPressione Enter para continuar...")
     if entrar == "":
         limp()
@@ -165,11 +166,11 @@ boss1 = classes.boss1
 boss2 = classes.boss2
 bossFinal = classes.bossFinal
 
-pedra = classes.criar_item("pedra", "recurso", 0, "construção", 0)
-madeira = classes.criar_item("madeira", "recurso", 0, "construção", 0)
-pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
-aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
-feijao = classes.criar_recurso("feijão", "comida", "restaura 20 de fome", 20)
+pedra = itens.criar_item("pedra", "recurso", 0, "construção", 0)
+madeira = itens.criar_item("madeira", "recurso", 0, "construção", 0)
+pao = itens.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
+aguaNormal = itens.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
+feijao = itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 20)
 
 def attNiveis(p, xp, xpmax, nivel): # Atualiza o nivel do personagem
     if xp >= xpmax:
@@ -180,11 +181,11 @@ def attNiveis(p, xp, xpmax, nivel): # Atualiza o nivel do personagem
         print(f"Parabéns! Você subiu para o nível {nivel}!")
     return xp, nivel
 
-pao = classes.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
-aguaNormal = classes.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
+pao = itens.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
+aguaNormal = itens.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
 
 def limp():
-    os.system('clear' if os.name != 'nt' else 'cls')
+    utils.limpar_tela()
 
 def mA(): # Mostra Atributos
     return f"""
@@ -196,8 +197,8 @@ def mA(): # Mostra Atributos
         XP: {xp} ()  Nível: {nivel}
 """
 
-def cadastro(): #Cadastro
-    limp()
+
+def nome_usuario():
     while True:
         nome = input("Cadastro do Usuário \nDigite seu nome de jogador: ").strip()
         if nome == "" or nome in "                                    ":
@@ -217,13 +218,27 @@ def cadastro(): #Cadastro
             continue
         else:
             break
-    limp()
-    mostrar_historia(nome)
-    print(f"\nBem-vindo(a), {cores.vermelhoT(nome)}! \n seus atributos iniciais são: ")
-    print(mA())
-    
+    return nome
 
-def AddP(p, vida, forca, velocidade, inteligencia, resistencia, nome): #Adiciona pontos aos atributos do personagem
+def cadastro(): #Cadastro
+    nome_jogador = nome_usuario()
+    limp()
+    mostrar_historia(nome_jogador)
+    print(f"\nBem-vindo(a), {cores.vermelhoT(nome_jogador)}! \n seus atributos iniciais são: ")
+    print(mA())
+    return nome_jogador
+
+
+def AddP(pontos, vida_atual, forca_atual, velocidade_atual, inteligencia_atual, resistencia_atual, nome): #Adiciona pontos aos atributos do personagem
+    global vida, forca, velocidade, inteligencia, resistencia, p
+
+    vida = vida_atual
+    forca = forca_atual
+    velocidade = velocidade_atual
+    inteligencia = inteligencia_atual
+    resistencia = resistencia_atual
+    p = pontos
+
     if p <= 0:
         print("Você não possui pontos para distribuir.")
         return
@@ -246,8 +261,8 @@ def AddP(p, vida, forca, velocidade, inteligencia, resistencia, nome): #Adiciona
             time.sleep(1)
             continue
         elif escolha == "6":
-                    print(mA())
-                    continue
+            print(mA())
+            continue
         qP = int(input("Quantos pontos deseja adicionar?\n")) #Quantidade de pontos a adicionar
 
         if qP > p:
@@ -338,8 +353,8 @@ def main(): # Onde o jogo começa
     for i in range(3):
         print(".", end="", flush=True)
         time.sleep(0.7)
+    acoes.primeira_acao()
     
 
-cadastro()
-AddP(p, vida, forca, velocidade, inteligencia, resistencia)
-menu()
+nome = cadastro()
+AddP(p, vida, forca, velocidade, inteligencia, resistencia, nome)

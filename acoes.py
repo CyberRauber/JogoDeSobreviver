@@ -1,32 +1,26 @@
 import time
-import main
-import os
+import utils
 
-def limp():
-    os.system('clear' if os.name != 'nt' else 'cls')
 
 def primeira_acao():
-    contexto = """Então você ouve os barulhos e percebe a movimentação nos carros...
-    O que você vai fazer?
-    1 - Se fingir de morto
-    2 - Sair correndo com a mochila que encontrou
-    3 - Se esconder novamente e esperar os barulhos acabarem
-    """
-    for letra in contexto:
-        print(letra, end="", flush=True)
-        time.sleep(0.01)
-    entrar = input("\n\nPressione Enter para continuar...")
-    if entrar == "":
-        limp()
+    texto = (
+        "Então você ouve os barulhos e percebe a movimentação nos carros...\n"
+        "O que você vai fazer?\n"
+        "1 - Se fingir de morto\n"
+        "2 - Sair correndo com a mochila que encontrou\n"
+        "3 - Se esconder novamente e esperar os barulhos acabarem"
+    )
+    utils.mostrar_texto_com_delay(texto, 0.05)
+    escolha = input("\nEscolha uma opção: ")
 
-    if contexto == "1":
-        correr()
-
-    elif contexto == "2":
+    if escolha == "1":
         fingir_morto()
-
-    elif contexto == "3":
+    elif escolha == "2":
+        correr()
+    elif escolha == "3":
         esconder()
+    else:
+        print("Opção inválida.")
 
 def correr():
     pass
@@ -65,9 +59,6 @@ Ele te ataca até você perder todas as forças...
 
 E até que por um momento, você morre.
 
-
 Fim de jogo...""")
-    for letra in a:
-            print(letra, end="", flush=True)
-            time.sleep(0.01)
+    utils.mostrar_texto_com_delay(a, 0.01)
     return
