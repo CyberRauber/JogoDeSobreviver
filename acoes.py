@@ -3,6 +3,9 @@ import utils
 import random
 import cores
 
+def acoes():
+    primeira_acao()
+    
 
 def primeira_acao():
     texto = (
@@ -24,15 +27,22 @@ def primeira_acao():
     else:
         print("Opção inválida.")
 
-def correr():
-    pass
+def correr(velocidade):
+    if velocidade >= 6:
+        certo = (f"""
+        Você decide correr...
+        Os {cores.verdeT("zumbis")} estão espalhados atrás de você...
+        Você bota a mochila nas costas e corre desesperadamente em busca de algum lugar seguro...
+        """)
+    
+    
 def esconder():
     pass
 
 def fingir_morto():
     chance = random.randint(1, 100)
-    if chance <= 20:
-        a = (f"""
+    if chance >= 20:
+        errado = (f"""
     Você decide se fingir de morto...
 
     Alguns minutos passam e os barulhos aumentam...
@@ -64,10 +74,10 @@ def fingir_morto():
     E até que por um momento, você morre.
 
     Fim de jogo...""")
-        utils.mostrar_texto_com_delay(a, 0.05)
+        utils.mostrar_texto_com_delay(errado, 0.05)
         return
     else:
-        b = (f"""
+        certo = (f"""
     Você decide se fingir de morto...
 
     Alguns minutos passam e os barulhos aumentam...
@@ -91,5 +101,5 @@ def fingir_morto():
     Você olha ao redor e percebe que os outros zumbis também foram embora.
 
     Você conseguiu escapar!""")
-        utils.mostrar_texto_com_delay(b, 0.05)
-        return
+        utils.mostrar_texto_com_delay(certo, 0.05)
+        utils.enter()

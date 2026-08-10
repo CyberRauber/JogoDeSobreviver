@@ -353,7 +353,7 @@ def main(): # Onde o jogo começa
     for i in range(3):
         print(".", end="", flush=True)
         time.sleep(0.7)
-    acoes.primeira_acao()
+    acoes.acoes()
     
 
 nome = cadastro()
