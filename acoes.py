@@ -1,6 +1,7 @@
 import time
 import utils
 import random
+import cores
 
 
 def primeira_acao():
@@ -30,7 +31,7 @@ def esconder():
 
 def fingir_morto():
     chance = random.randint(1, 100)
-    if chance >= 20:
+    if chance <= 20:
         a = (f"""
     Você decide se fingir de morto...
 
@@ -40,7 +41,7 @@ def fingir_morto():
 
     Até que derrepende o que você mais temia aconteceu...
 
-    Um ZUMBI!!!
+    Um {cores.verdeT("ZUMBI")}!!!
 
     Quando ele passa ao seu lado, com um cheiro horrível de carniça, percebe que você está deitado no chão.
 
@@ -75,7 +76,7 @@ def fingir_morto():
 
     Você permanece imóvel, tentando não fazer nenhum barulho.
 
-    Até que, de repente, um ZUMBI passa bem ao seu lado.
+    Até que, de repente, um {cores.verdeT("ZUMBI")} passa bem ao seu lado.
 
     Ele olha para você por alguns segundos...
 
