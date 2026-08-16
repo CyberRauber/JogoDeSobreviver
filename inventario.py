@@ -35,15 +35,6 @@ def adicionar_item_inventario(inventario, item):
         inventario.append(item)
         return inventario
 
-    while True:
-        resposta = input("Deseja adicionar este item ao seu inventário?(S/N)\n").upper()
-        if resposta == "S":
-            inventario.append(item)
-            return inventario
-        if resposta == "N":
-            return inventario
-        print("Opção inválida, tente novamente.")
-
 
 def usar_item_inventario(inventario, item):
     if item in inventario:

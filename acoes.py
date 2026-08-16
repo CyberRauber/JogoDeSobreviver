@@ -2,104 +2,79 @@ import time
 import utils
 import random
 import cores
+import inventario
 
 def acoes():
-    primeira_acao()
-    
+    fase1()
 
-def primeira_acao():
-    texto = (
-        "Então você ouve os barulhos e percebe a movimentação nos carros...\n"
-        "O que você vai fazer?\n"
-        "1 - Se fingir de morto\n"
-        "2 - Sair correndo com a mochila que encontrou\n"
-        "3 - Se esconder novamente e esperar os barulhos acabarem"
-    )
+def fase1():
+    print("FASE 1 — A CASA ABANDONADA")
+    texto = (f"""
+Depois de horas caminhando sem rumo, você encontra uma pequena casa aparentemente abandonada na beira de uma estrada.
+
+A porta está entreaberta e há marcas de sangue seco na entrada. Mesmo assim, ficar do lado de fora durante a noite parece ainda mais perigoso.
+
+Ao entrar na casa, você encontra uma lata de feijão, uma garrafa de água, bandagens, e alguns objetos como garfos, facas, estacas que podem ser usados como arma.
+
+Você acha que é uma boa ideia ter esse tipo de recurso, então você decide pegar alguns itens para sua mochila.
+
+Qual arma você vai guardar para caso um {cores.verdeT("zumbi")} apareça?
+
+1 - Garfos (dano baixo)
+2 - Facas (dano médio)
+3 - Estacas (dano alto)
+""")
+
     utils.mostrar_texto_com_delay(texto, 0.05)
-    escolha = input("\nEscolha uma opção: ")
+    inventario.adicionar_item_inventario("lata de feijão", 1)
+    inventario.adicionar_item_inventario("garrafa de água", 1)
+    inventario.adicionar_item_inventario("bandagem", 1)
+    while True:
+        escolha = input("\nEscolha uma opção: ")
 
-    if escolha == "1":
-        fingir_morto()
-    elif escolha == "2":
-        correr()
-    elif escolha == "3":
-        esconder()
-    else:
-        print("Opção inválida.")
+        if escolha == "1":
+            inventario.adicionar_item_inventario("garfo", 1)
+        elif escolha == "2":
+            inventario.adicionar_item_inventario("faca", 1)
+        elif escolha == "3":
+            inventario.adicionar_item_inventario("estaca", 1)
+        else:
+            print("Opção inválida. Tente novamente.")
+            continue
+        break
+    texto2 = (f"""
+Enquanto procura recursos, um barulho de grunhido junto com passos lentos e batidas em portas vem do andar de cima.
 
-def correr(velocidade):
-    if velocidade >= 6:
-        certo = (f"""
-        Você decide correr...
-        Os {cores.verdeT("zumbis")} estão espalhados atrás de você...
-        Você bota a mochila nas costas e corre desesperadamente em busca de algum lugar seguro...
-        """)
+Uma pessoa infectada está presa em um dos quartos.
+
+O que você vai fazer?
+
+1 - Usar sua arma para lutar contra o {cores.verdeT("zumbi")} e tentar matá-lo.")
+2 - Sair de fininho da casa e sair em busca de outro lugar para se abrigar.
+""")
+    utils.mostrar_texto_com_delay(texto2, 0.05)
+    while True:
+        escolha2 = input("\nEscolha uma opção: ")
+
+        if escolha2 == "1":
+            print("""Você decide enfrentar o zumbi...
+
+            Você se prepara para o combate, segurando firmemente sua arma escolhida.
+            
+            Lentamente, você sobe as escadas, cada passo ecoando pela casa silenciosa.
+            
+            Então, você encontra a porta do quarto trancada. O grunhido fica mais alto e você percebe que o zumbi está tentando sair.
+            
+            Você, já armado com sua arma, se prepara para o confronto. O zumbi finalmente consegue abrir a porta e avança em sua direção.
+            
+            """)
+            # Aqui você pode adicionar a lógica de combate
+            break
+        elif escolha2 == "2":
+            print("Você decide sair da casa e procurar outro lugar para se abrigar.")
+            # Aqui você pode adicionar a lógica de fuga
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+            continue
     
-    
-def esconder():
-    pass
-
-def fingir_morto():
-    chance = random.randint(1, 100)
-    if chance >= 20:
-        errado = (f"""
-    Você decide se fingir de morto...
-
-    Alguns minutos passam e os barulhos aumentam...
-
-    Você percebe que aqueles movimentos estranhos estão chegando mais próximos de você.
-
-    Até que derrepende o que você mais temia aconteceu...
-
-    Um {cores.verdeT("ZUMBI")}!!!
-
-    Quando ele passa ao seu lado, com um cheiro horrível de carniça, percebe que você está deitado no chão.
-
-    Por um momento, ele acha que você está realmente morto.
-
-    Mas como você está vivo, e sentindo um cheiro ruim, você tosse.
-
-    O zumbi começa a correr na sua direção.
-
-    Mas você não tem pra onde fugir.
-
-    O zumbi te alcança.
-
-    Você tenta se defender com o seu braço esquerdo...
-
-    Mas o zumbi é mais forte, e morde seu braço.
-
-    Ele te ataca até você perder todas as forças...
-
-    E até que por um momento, você morre.
-
-    Fim de jogo...""")
-        utils.mostrar_texto_com_delay(errado, 0.05)
-        return
-    else:
-        certo = (f"""
-    Você decide se fingir de morto...
-
-    Alguns minutos passam e os barulhos aumentam...
-
-    Você percebe que aqueles movimentos estranhos estão chegando cada vez mais perto.
-
-    Você permanece imóvel, tentando não fazer nenhum barulho.
-
-    Até que, de repente, um {cores.verdeT("ZUMBI")} passa bem ao seu lado.
-
-    Ele olha para você por alguns segundos...
-
-    Mas parece acreditar que você está realmente morto.
-
-    O zumbi continua andando e desaparece entre os carros.
-
-    Você espera mais alguns minutos, até ter certeza de que está seguro.
-
-    Então, lentamente, você se levanta.
-
-    Você olha ao redor e percebe que os outros zumbis também foram embora.
-
-    Você conseguiu escapar!""")
-        utils.mostrar_texto_com_delay(certo, 0.05)
-        utils.enter()
