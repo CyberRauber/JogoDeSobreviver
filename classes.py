@@ -1,10 +1,10 @@
 import random
 
-forca = random.randint(10, 20)
-vida = random.randint(90, 115)
-velocidade = random.randint(7, 15)
-inteligencia = random.randint(270, 330)
-resistencia = random.randint(50, 70)
+forca = random.randint(0, 10)
+vida = 100
+velocidade = random.randint(0, 10)
+inteligencia = random.randint(1, 10)
+resistencia = random.randint(0, 10)
 
 
 def criar_personagem(nome, vida=vida, forca=forca, velocidade=velocidade, inteligencia=inteligencia, resistencia=resistencia, inventario=None, fome=100, sede=100, xp=0, nivel=0):
