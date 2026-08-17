@@ -27,23 +27,26 @@ Qual arma você vai guardar para caso um {cores.verdeT("zumbi")} apareça?
 2 - Facas (dano médio)
 3 - Estacas (dano alto)
 """)
-
     utils.mostrar_texto_com_delay(texto, 0.05)
     inventario.adicionar_item_inventario(
         jogador["inventario"],
-        itens.criar_recurso("lata de feijão", "comida", "restaura 20 de fome", 1),
+        itens.criar_recurso("lata de feijão", "comida", "restaura 20 de fome", 1, restaura_fome=20),
+        mostrar=False,
     )
     inventario.adicionar_item_inventario(
         jogador["inventario"],
-        itens.criar_recurso("garrafa de água", "bebida", "restaura 10 de sede", 1),
+        itens.criar_recurso("garrafa de água", "bebida", "restaura 10 de sede", 1, restaura_sede=10),
+        mostrar=False,
     )
     inventario.adicionar_item_inventario(
         jogador["inventario"],
-        itens.criar_recurso("bandagem", "cura", "restaura vida", 1),
+        itens.criar_recurso("bandagem", "cura", "restaura vida", 1, restaura_vida=15),
+        mostrar=False,
     )
+    inventario.mostrar_inventario(jogador["inventario"])
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             arma = itens.criar_item("garfo", "arma", 5, "dano baixo", 1)
@@ -71,7 +74,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto2, 0.05)
 
     while True:
-        escolha2 = input("\nEscolha uma opção: ")
+        escolha2 = utils.pedir_escolha(jogador=jogador)
 
         if escolha2 == "1":
             print("""
@@ -127,7 +130,7 @@ O que você vai fazer?
     )
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -183,7 +186,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -197,7 +200,7 @@ O saqueador avança primeiro, o cano de metal cortando o ar em sua direção.
                 print("\nCom o saqueador derrotado, você reúne o que restou nas prateleiras.")
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("barra de cereal", "comida", "restaura 15 de fome", 2),
+                    itens.criar_recurso("barra de cereal", "comida", "restaura 15 de fome", 2, restaura_fome=15),
                 )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
@@ -235,7 +238,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -283,7 +286,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -295,7 +298,7 @@ Não há como passar despercebido por aquela coisa. Você se posiciona entre as 
                 print("\nCom o caminho livre, você finalmente alcança a farmácia e encontra alguns suprimentos médicos.")
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("kit médico", "cura", "restaura vida", 1),
+                    itens.criar_recurso("kit médico", "cura", "restaura vida", 1, restaura_vida=30, bonus_resistencia=1),
                 )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
@@ -335,7 +338,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -383,7 +386,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -429,7 +432,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -441,7 +444,7 @@ Não há tempo para hesitar. A fera já está avançando, o chão tremendo sob s
                 print("\nA fera finalmente cai no chão do celeiro, imóvel. Você se apoia na parede, exausto.")
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("carne", "comida", "restaura 25 de fome", 2),
+                    itens.criar_recurso("carne", "comida", "restaura 25 de fome", 2, restaura_fome=25, bonus_forca=1),
                 )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
@@ -479,7 +482,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -527,7 +530,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -571,7 +574,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -639,7 +642,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -683,7 +686,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -695,12 +698,15 @@ Você escolhe não abandonar uma chance de conseguir recursos. Entre os veículo
                 print("\nCom o caminho livre, você encontra água, bandagens e uma barra de energia em uma mochila militar.")
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("barra de energia", "comida", "restaura 20 de fome", 2),
+                    itens.criar_recurso("barra de energia", "comida", "restaura 20 de fome", 2, restaura_fome=20),
+                    mostrar=False,
                 )
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("bandagem", "cura", "restaura vida", 1),
+                    itens.criar_recurso("bandagem", "cura", "restaura vida", 1, restaura_vida=15),
+                    mostrar=False,
                 )
+                inventario.mostrar_inventario(jogador["inventario"])
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -733,7 +739,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -777,7 +783,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -827,7 +833,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -871,7 +877,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -929,7 +935,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -975,7 +981,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""
@@ -1033,7 +1039,7 @@ O que você vai fazer?
     utils.mostrar_texto_com_delay(texto, 0.05)
 
     while True:
-        escolha = input("\nEscolha uma opção: ")
+        escolha = utils.pedir_escolha(jogador=jogador)
 
         if escolha == "1":
             print("""

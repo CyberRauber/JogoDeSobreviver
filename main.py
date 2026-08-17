@@ -151,16 +151,6 @@ def limp():
     utils.limpar_tela()
 
 
-def mA(jogador):  # Mostra atributs
-    return f"""
-        Vida: {jogador['vida']}  Fome: {jogador['fome']}  Sede: {jogador['sede']}  
-        Força: {jogador['forca']}
-        Velocidade: {jogador['velocidade']}
-        Inteligência: {jogador['inteligencia']}
-        Resistência: {jogador['resistencia']}
-"""
-
-
 def nome_usuario():
     while True:
         nome = input("Cadastro do Usuário \nDigite seu nome de jogador: ").strip()
@@ -192,15 +182,21 @@ def cadastro():
     itens_iniciais = [
         itens.criar_recurso("pedra", "construção", "usado para criar itens", 1),
         itens.criar_recurso("madeira", "construção", "usado para criar itens", 1),
-        itens.criar_recurso("pão", "comida", "restaura 10 de fome", 1),
-        itens.criar_recurso("água", "bebida", "restaura 10 de sede", 1),
-        itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 1),
+        itens.criar_recurso("pão", "comida", "restaura 10 de fome", 1, restaura_fome=10),
+        itens.criar_recurso("água", "bebida", "restaura 10 de sede", 1, restaura_sede=10),
+        itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 1, restaura_fome=20),
     ]
     for item in itens_iniciais:
-        inventario.adicionar_item_inventario(jogador["inventario"], item)
+        inventario.adicionar_item_inventario(jogador["inventario"], item, mostrar=False)
 
     print(f"\nBem-vindo(a), {cores.vermelhoT(nome_jogador)}! \n seus atributos iniciais são: ")
-    print(mA(jogador))
+    print(utils.mostrar_atributos(jogador))
+    print(f"{cores.amareloT('Itens iniciais:')}")
+    inventario.mostrar_inventario(jogador["inventario"])
+    print(
+        f"\n{cores.amareloT('Dica:')} a qualquer momento em que o jogo pedir uma escolha, "
+        "digite 'A' para ver seus atributos ou 'I' para ver/usar seu inventário."
+    )
     utils.enter()
     return jogador
 
@@ -222,12 +218,12 @@ def menu(jogador):
                 print(f"\n{cores.vermelhoT('FIM DE JOGO')} — sua jornada chega ao fim aqui.")
                 break
         elif r == "2":
-            print(mA(jogador))
+            print(utils.mostrar_atributos(jogador))
             utils.enter()
         elif r == "3":
             mostrar_historia(jogador["nome"])
         elif r == "4":
-            inventario.mostrar_inventario(jogador["inventario"])
+            inventario.menu_inventario(jogador)
             utils.enter()
         elif r == "0":
             print("Saindo do jogo...")

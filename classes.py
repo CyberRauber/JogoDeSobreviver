@@ -3,10 +3,12 @@ import random
 
 def criar_personagem(nome, vida=None, forca=None, velocidade=None,
                       inteligencia=None, resistencia=None, inventario=None,
-                      fome=100, sede=100):
+                      fome=100, sede=100, vida_maxima=None):
+    vida_inicial = vida if vida is not None else 100
     return {
         "nome": nome,
-        "vida": vida if vida is not None else 100,
+        "vida": vida_inicial,
+        "vida_maxima": vida_maxima if vida_maxima is not None else vida_inicial,
         "forca": forca if forca is not None else random.randint(0, 10),
         "velocidade": velocidade if velocidade is not None else random.randint(0, 10),
         "inteligencia": inteligencia if inteligencia is not None else random.randint(1, 10),

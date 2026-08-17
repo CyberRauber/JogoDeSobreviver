@@ -20,29 +20,23 @@ def armas_disponiveis(jogador):
     ]
 
 
-def escolher_arma(jogador):
+def melhor_arma(jogador):
+    """Seleciona automaticamente a arma de maior dano no inventário do jogador."""
     armas = armas_disponiveis(jogador)
 
     if not armas:
-        print("\nVocê não tem nenhuma arma física em mãos — vai precisar usar os punhos.")
         return "punhos", 3
 
-    print("\nCom qual arma você quer atacar?")
-    for i, arma in enumerate(armas, start=1):
-        print(f"{i} - {arma['nome']} ({arma.get('efeito', 'sem efeito descrito')})")
-    print(f"{len(armas) + 1} - Lutar com os próprios punhos")
+    arma_escolhida = max(armas, key=lambda arma: arma.get("dano", 0))
+    return arma_escolhida["nome"], arma_escolhida.get("dano", 0)
 
-    while True:
-        escolha = input("Escolha uma opção: ")
-        if escolha.isdigit():
-            indice = int(escolha)
-            if 1 <= indice <= len(armas):
-                arma_escolhida = armas[indice - 1]
-                return arma_escolhida["nome"], arma_escolhida.get("dano", 0)
-            if indice == len(armas) + 1:
-                return "punhos", 3
-        print("Opção inválida. Tente novamente.")
 
+LIMIAR_FUGA = 0.3 
+
+
+def tentar_fugir(jogador, inimigo):
+    chance = 40 + jogador.get("velocidade", 0) * 3 - inimigo.get("velocidade", 0) * 2
+    return random.randint(1, 100) <= max(5, min(chance, 95))
 
 OPCOES_PADRAO = [
     ("1", "Atacar"),
@@ -51,12 +45,10 @@ OPCOES_PADRAO = [
     ("4", "Tentar se esconder"),
 ]
 
-
 OPCOES_CONFRONTO_DIRETO = [
     ("1", "Atacar"),
     ("2", "Fugir/Correr"),
 ]
-
 
 OPCOES_SEM_FINGIR_DE_MORTO = [
     ("1", "Atacar"),
@@ -65,78 +57,65 @@ OPCOES_SEM_FINGIR_DE_MORTO = [
 ]
 
 
-def menu_batalha(opcoes=None):
-    if opcoes is None:
-        opcoes = OPCOES_PADRAO
-
-    print("\n    MENU DE ESCOLHAS")
-    for numero, texto in opcoes:
-        print(f"    {numero} - {texto}")
-
-    validos = [numero for numero, _ in opcoes]
-    while True:
-        r = input("Escolha uma opção: ")
-        if r in validos:
-            return r
-        print("Opção inválida. Tente novamente.")
-
-
 def iniciar_combate(jogador, inimigo, opcoes=None):
-    print(f"\nVida do {inimigo['nome']}: {inimigo['vida']}\n")
+    """Combate totalmente automático: o jogador ataca sozinho, rodada a rodada,
+    com a melhor arma disponível, até que ele ou o inimigo seja derrotado.
+    Se a vida do jogador cair abaixo de LIMIAR_FUGA, ele tenta fugir
+    automaticamente em vez de continuar atacando."""
+    print(f"\nUm combate contra {inimigo['nome']} começou! Vida do inimigo: {inimigo['vida']}")
 
+    nome_arma, bonus_arma = melhor_arma(jogador)
+    if nome_arma == "punhos":
+        print("Você não tem nenhuma arma física em mãos — vai lutar com os próprios punhos.\n")
+    else:
+        print(f"Você entra no combate empunhando: {nome_arma}.\n")
+
+    vida_maxima = jogador.get("vida_maxima", 100)
+
+    rodada = 1
     while jogador["vida"] > 0 and inimigo["vida"] > 0:
-        escolha = menu_batalha(opcoes)
+        print(f"--- Rodada {rodada} ---")
 
-        if escolha == "1":
-            nome_arma, bonus_arma = escolher_arma(jogador)
-            dano = aplicar_ataque(jogador, inimigo, bonus_arma)
-            if nome_arma == "punhos":
-                print(f"Você golpeia o {inimigo['nome']} com os próprios punhos e causa {dano} de dano. "
-                      f"Vida restante do inimigo: {inimigo['vida']}")
-            else:
-                print(f"Você ataca o {inimigo['nome']} com {nome_arma} e causa {dano} de dano. "
-                      f"Vida restante do inimigo: {inimigo['vida']}")
-            if inimigo["vida"] <= 0:
-                print(f"\nVocê derrotou o {inimigo['nome']}!")
-                return True
-            dano_inimigo = aplicar_ataque(inimigo, jogador)
-            print(f"O {inimigo['nome']} revidou e causou {dano_inimigo} de dano. "
-                  f"Sua vida restante: {jogador['vida']}")
-
-        elif escolha == "2":
-            chance = 40 + jogador.get("velocidade", 0) * 3 - inimigo.get("velocidade", 0) * 2
-            if random.randint(1, 100) <= max(5, min(chance, 95)):
-                print("Você conseguiu fugir!")
+        if jogador["vida"] <= vida_maxima * LIMIAR_FUGA:
+            print(f"Sua vida está baixa ({jogador['vida']}/{vida_maxima}) — você tenta fugir do {inimigo['nome']}!")
+            if tentar_fugir(jogador, inimigo):
+                print("Você conseguiu escapar a tempo!")
                 return None
+
             print("Você tentou fugir, mas não conseguiu escapar!")
             dano_inimigo = aplicar_ataque(inimigo, jogador)
-            print(f"O {inimigo['nome']} te atacou e causou {dano_inimigo} de dano. "
+            print(f"O {inimigo['nome']} aproveitou a brecha e causou {dano_inimigo} de dano. "
                   f"Sua vida restante: {jogador['vida']}")
 
-        elif escolha == "3":
-            chance = 30 + jogador.get("inteligencia", 0) * 3
-            if random.randint(1, 100) <= max(5, min(chance, 90)):
-                print(f"O {inimigo['nome']} perde o interesse e se afasta.")
-                return None
-            print("O truque não funcionou!")
-            dano_inimigo = aplicar_ataque(inimigo, jogador)
-            print(f"O {inimigo['nome']} te atacou e causou {dano_inimigo} de dano. "
-                  f"Sua vida restante: {jogador['vida']}")
+            if jogador["vida"] <= 0:
+                print("\nVocê foi derrotado...")
+                return False
 
-        elif escolha == "4":
-            chance = 35 + jogador.get("inteligencia", 0) * 2 + jogador.get("velocidade", 0) * 2
-            if random.randint(1, 100) <= max(5, min(chance, 90)):
-                print("Você se escondeu com sucesso e o perigo passou.")
-                return None
-            print("Você foi encontrado!")
-            dano_inimigo = aplicar_ataque(inimigo, jogador)
-            print(f"O {inimigo['nome']} te atacou e causou {dano_inimigo} de dano. "
-                  f"Sua vida restante: {jogador['vida']}")
+            rodada += 1
+            time.sleep(0.5)
+            continue
+
+        dano = aplicar_ataque(jogador, inimigo, bonus_arma)
+        if nome_arma == "punhos":
+            print(f"Você golpeia o {inimigo['nome']} com os próprios punhos e causa {dano} de dano. "
+                  f"Vida restante do inimigo: {inimigo['vida']}")
+        else:
+            print(f"Você ataca o {inimigo['nome']} com {nome_arma} e causa {dano} de dano. "
+                  f"Vida restante do inimigo: {inimigo['vida']}")
+
+        if inimigo["vida"] <= 0:
+            print(f"\nVocê derrotou o {inimigo['nome']}!")
+            return True
+
+        dano_inimigo = aplicar_ataque(inimigo, jogador)
+        print(f"O {inimigo['nome']} revidou e causou {dano_inimigo} de dano. "
+              f"Sua vida restante: {jogador['vida']}")
 
         if jogador["vida"] <= 0:
             print("\nVocê foi derrotado...")
             return False
 
-        time.sleep(0.4)
+        rodada += 1
+        time.sleep(0.5)
 
     return jogador["vida"] > 0
