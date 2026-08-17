@@ -1,4 +1,5 @@
 import fases
+import inventario
 
 
 LISTA_DE_FASES = [
@@ -25,8 +26,19 @@ LISTA_DE_FASES = [
 ]
 
 
+def oferecer_uso_de_item(jogador):
+    resposta = input("\nDeseja usar algum item do inventário antes de continuar? (s/n): ").strip().lower()
+    if resposta == "s":
+        inventario.menu_inventario(jogador)
+
+
 def acoes(jogador):
-    for fase in LISTA_DE_FASES:
+    total_fases = len(LISTA_DE_FASES)
+    for indice, fase in enumerate(LISTA_DE_FASES, start=1):
         fase(jogador)
+
         if not fases.jogador_vivo(jogador):
             return
+
+        if indice < total_fases:
+            oferecer_uso_de_item(jogador)

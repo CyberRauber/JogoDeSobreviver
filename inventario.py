@@ -60,20 +60,19 @@ def aplicar_efeito_item(jogador, item):
     restaura_fome = item.get("restaura_fome", 0)
     if restaura_fome:
         antes = jogador.get("fome", 0)
-        jogador["fome"] = min(100, antes + restaura_fome)
+        jogador["fome"] = antes + restaura_fome
         ganhos.append(f"+{jogador['fome'] - antes} de fome")
 
     restaura_sede = item.get("restaura_sede", 0)
     if restaura_sede:
         antes = jogador.get("sede", 0)
-        jogador["sede"] = min(100, antes + restaura_sede)
+        jogador["sede"] = antes + restaura_sede
         ganhos.append(f"+{jogador['sede'] - antes} de sede")
 
     restaura_vida = item.get("restaura_vida", 0)
     if restaura_vida:
         antes = jogador.get("vida", 0)
-        vida_maxima = jogador.get("vida_maxima", 100)
-        jogador["vida"] = min(vida_maxima, antes + restaura_vida)
+        jogador["vida"] = antes + restaura_vida
         ganhos.append(f"+{jogador['vida'] - antes} de vida")
 
     for atributo, chave_bonus in (
