@@ -1,25 +1,19 @@
 import random
 
-forca = random.randint(0, 10)
-vida = 100
-velocidade = random.randint(0, 10)
-inteligencia = random.randint(1, 10)
-resistencia = random.randint(0, 10)
 
-
-def criar_personagem(nome, vida=vida, forca=forca, velocidade=velocidade, inteligencia=inteligencia, resistencia=resistencia, inventario=None, fome=100, sede=100, xp=0, nivel=0):
+def criar_personagem(nome, vida=None, forca=None, velocidade=None,
+                      inteligencia=None, resistencia=None, inventario=None,
+                      fome=100, sede=100):
     return {
         "nome": nome,
-        "vida": vida,
-        "forca": forca,
-        "velocidade": velocidade,
-        "inteligencia": inteligencia,
-        "resistencia": resistencia,
-        "inventario": inventario,
+        "vida": vida if vida is not None else 100,
+        "forca": forca if forca is not None else random.randint(0, 10),
+        "velocidade": velocidade if velocidade is not None else random.randint(0, 10),
+        "inteligencia": inteligencia if inteligencia is not None else random.randint(1, 10),
+        "resistencia": resistencia if resistencia is not None else random.randint(0, 10),
+        "inventario": inventario if inventario is not None else [],
         "fome": fome,
         "sede": sede,
-        "xp": xp,
-        "nivel": nivel,
     }
 
 

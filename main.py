@@ -6,6 +6,7 @@ import inventario
 import itens
 import utils
 
+
 def mostrar_historia(nome):
     pular_historia = input("Deseja pular a história? (s/n): ").lower()
     if pular_historia == "s":
@@ -141,48 +142,29 @@ Até que não reste mais ninguém...
 
 Ou até que você descubra a verdade por trás do {cores.verdeT("Vírus")}.
 """)
-    
+
     utils.mostrar_texto_com_delay(historia, 0.01)
-    entrar = input("\n\nPressione Enter para continuar...")
-    if entrar == "":
-        limp()
+    utils.enter()
 
-vida = classes.vida
-forca = classes.forca
-velocidade = classes.velocidade
-inteligencia = classes.inteligencia
-resistencia = classes.resistencia
-fome = 100
-sede = 100
 
-zFraco = classes.zFraco
-zMedio = classes.zMedio
-zForte = classes.zForte
-boss1 = classes.boss1
-boss2 = classes.boss2
-bossFinal = classes.bossFinal
-
-pedra = itens.criar_item("pedra", "recurso", 0, "construção", 0)
-madeira = itens.criar_item("madeira", "recurso", 0, "construção", 0)
-pao = itens.criar_recurso("pão", "comida", "restaura 10 de fome", 10)
-aguaNormal = itens.criar_recurso("água", "bebida", "restaura 10 de sede", 10)
-feijao = itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 20)
 def limp():
     utils.limpar_tela()
 
-def mA(): # Mostra Atributos
+
+def mA(jogador):  # Mostra atributs
     return f"""
-        Vida: {vida}  Fome: {fome}  Sede: {sede}  
-        Força: {forca}
-        Velocidade: {velocidade}
-        Inteligência: {inteligencia}
-        Resistência: {resistencia}
+        Vida: {jogador['vida']}  Fome: {jogador['fome']}  Sede: {jogador['sede']}  
+        Força: {jogador['forca']}
+        Velocidade: {jogador['velocidade']}
+        Inteligência: {jogador['inteligencia']}
+        Resistência: {jogador['resistencia']}
 """
+
 
 def nome_usuario():
     while True:
         nome = input("Cadastro do Usuário \nDigite seu nome de jogador: ").strip()
-        if nome == "" or nome in "                                    ":
+        if nome == "":
             print("Nome inválido. Tente novamente.")
             time.sleep(1)
             limp()
@@ -201,66 +183,69 @@ def nome_usuario():
             break
     return nome
 
-def cadastro(): #Cadastro
+
+def cadastro():
     nome_jogador = nome_usuario()
     limp()
     mostrar_historia(nome_jogador)
-    print(f"\nBem-vindo(a), {cores.vermelhoT(nome_jogador)}! \n seus atributos iniciais são: ")
-    print(mA())
-    return nome_jogador
+    jogador = classes.criar_personagem(nome_jogador, inventario=[])
+    itens_iniciais = [
+        itens.criar_recurso("pedra", "construção", "usado para criar itens", 1),
+        itens.criar_recurso("madeira", "construção", "usado para criar itens", 1),
+        itens.criar_recurso("pão", "comida", "restaura 10 de fome", 1),
+        itens.criar_recurso("água", "bebida", "restaura 10 de sede", 1),
+        itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 1),
+    ]
+    for item in itens_iniciais:
+        inventario.adicionar_item_inventario(jogador["inventario"], item)
 
-def menu(nome):
-    print("""
+    print(f"\nBem-vindo(a), {cores.vermelhoT(nome_jogador)}! \n seus atributos iniciais são: ")
+    print(mA(jogador))
+    utils.enter()
+    return jogador
+
+
+def menu(jogador):
+    while True:
+        print("""
     MENU PRINCIPAL
     1 - Continuar o jogo
     2 - Mostrar Atributos
     3 - Mostrar história
-    4 - Craftar Item
+    4 - Mostrar Inventário
     0 - Sair
 """)
-    r = input("Escolha uma opção: ")
-    if r == "1":
-        main()
-    elif r == "3":
-        mostrar_historia(nome)
+        r = input("Escolha uma opção: ")
+        if r == "1":
+            iniciar_jogo(jogador)
+            if jogador["vida"] <= 0:
+                print(f"\n{cores.vermelhoT('FIM DE JOGO')} — sua jornada chega ao fim aqui.")
+                break
+        elif r == "2":
+            print(mA(jogador))
+            utils.enter()
+        elif r == "3":
+            mostrar_historia(jogador["nome"])
+        elif r == "4":
+            inventario.mostrar_inventario(jogador["inventario"])
+            utils.enter()
+        elif r == "0":
+            print("Saindo do jogo...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
 
-def menuEscolha():
-    print("""
 
-
-
-
-
-
-""")
-
-def menuEscolhaBatalha():
-    print("""
-    MENU DE ESCOLHAS
-    1 - Atacar
-    2 - Fugir/Correr
-    3 - Se fingir de Morto
-    4 - Tentar se esconder
-""")
-    r = input("Escolha uma opção: ")
-    if r == "1":
-        pass
-    elif r == "2":
-        pass
-    elif r == "3":
-        pass
-    elif r == "4":
-        pass
-    elif r == "0":
-        menu()
-def main(): # Onde o jogo começa
+def iniciar_jogo(jogador):
     limp()
     print("Iniciando jogo!")
     for i in range(3):
         print(".", end="", flush=True)
         time.sleep(0.7)
-    acoes.acoes()
-    
+    print()
+    acoes.acoes(jogador)
 
-nome = cadastro()
-main()
+
+if __name__ == "__main__":
+    jogador_atual = cadastro()
+    menu(jogador_atual)

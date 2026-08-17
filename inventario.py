@@ -2,7 +2,7 @@ def recursos_itens_inventario(inventario):
     recursos = []
     itens = []
     for item in inventario:
-        if item["tipo"] == "recurso":
+        if item.get("categoria") == "recurso":
             recursos.append(item)
         else:
             itens.append(item)
@@ -10,35 +10,52 @@ def recursos_itens_inventario(inventario):
 
 
 def mostrar_inventario(inventario):
+    if inventario_vazio(inventario):
+        print("O inventário está vazio.")
+        return
+
     recursos, itens = recursos_itens_inventario(inventario)
-    print("Recursos:")
-    for recurso in recursos:
-        print(f"{recurso['nome']} --> {recurso['quantidade']} unidades")
-    print("\nItens:")
-    for item in itens:
-        print(f"{item['nome']} --> {item['quantidade']} unidades")
-    return recursos, itens
+
+    if recursos:
+        print("Recursos:")
+        for recurso in recursos:
+            print(f"{recurso['nome']} --> {recurso['quantidade']} unidades")
+
+    if itens:
+        print("\nItens:")
+        for item in itens:
+            print(f"{item['nome']} --> {item['quantidade']} unidades")
 
 
 def inventario_vazio(inventario):
-    if len(inventario) == 0:
-        return "O inventário está vazio."
-    else:
-        return mostrar_inventario(inventario)
+    return len(inventario) == 0
 
 
 def adicionar_item_inventario(inventario, item):
     if item is None:
         return inventario
 
-    if isinstance(item, dict):
-        inventario.append(item)
+    if not isinstance(item, dict):
+        print("Erro: item inválido não pôde ser adicionado ao inventário.")
         return inventario
 
+    for existente in inventario:
+        if existente["nome"] == item["nome"]:
+            existente["quantidade"] += item.get("quantidade", 1)
+            return inventario
 
-def usar_item_inventario(inventario, item):
-    if item in inventario:
-        inventario.remove(item)
-        print(f"{item['nome']} foi usado.")
-    else:
-        print(f"{item['nome']} não está no inventário.")
+    inventario.append(item)
+    return inventario
+
+
+def usar_item_inventario(inventario, nome_item):
+    for item in inventario:
+        if item["nome"] == nome_item:
+            item["quantidade"] -= 1
+            print(f"{item['nome']} foi usado.")
+            if item["quantidade"] <= 0:
+                inventario.remove(item)
+            return inventario
+
+    print(f"{nome_item} não está no inventário.")
+    return inventario
