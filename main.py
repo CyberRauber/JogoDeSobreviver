@@ -16,7 +16,7 @@ def mostrar_historia(nome):
 
 Tudo começou com uma {cores.amareloT("doença")}.
 
-    No início, parecia apenas mais um {cores.verdeT("Vírus")}. O chamado {cores.verdeT("Vírus Nossila")} Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
+    No início, parecia apenas mais um {cores.verdeT("Vírus")}. O chamado {cores.verdeT("Vírus Suehtam-19")} Os primeiros casos surgiram em pequenas cidades, causando febre intensa, confusão mental e um comportamento agressivo. Em poucos dias, hospitais ficaram lotados. Em poucas semanas, países inteiros entraram em quarentena.
 
 Os governos afirmavam que tudo estava sob controle.
 
@@ -182,9 +182,9 @@ def cadastro():
     itens_iniciais = [
         itens.criar_recurso("pedra", "construção", "usado para criar itens", 1),
         itens.criar_recurso("madeira", "construção", "usado para criar itens", 1),
-        itens.criar_recurso("pão", "comida", "restaura 10 de fome", 1, restaura_fome=10),
-        itens.criar_recurso("água", "bebida", "restaura 10 de sede", 1, restaura_sede=10),
-        itens.criar_recurso("feijão", "comida", "restaura 20 de fome", 1, restaura_fome=20),
+        itens.criar_recurso("pão", "comida", "restaura 10 de vida", 1, restaura_vida=10),
+        itens.criar_recurso("água", "bebida", "restaura 10 de vida'", 1, restaura_vida=10),
+        itens.criar_recurso("feijão", "comida", "restaura 20 de vida", 1, restaura_vida=20),
     ]
     for item in itens_iniciais:
         inventario.adicionar_item_inventario(jogador["inventario"], item, mostrar=False)
