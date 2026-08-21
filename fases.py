@@ -7,7 +7,7 @@ import classes
 
 
 def jogador_vivo(jogador):
-    return jogador["vida"] > 0
+    return jogador.get("vida", 0) > 0
 
 
 def fase1(jogador):
@@ -40,7 +40,7 @@ Qual arma você vai guardar para caso um {cores.verdeT("zumbi")} apareça?
     )
     inventario.adicionar_item_inventario(
         jogador["inventario"],
-        itens.criar_recurso("bandagem", "cura", "restaura vida", 1, restaura_vida=15),
+        itens.criar_recurso("bandagem", "cura", "restaura 15 de vida", 1, restaura_vida=15),
         mostrar=False,
     )
     inventario.mostrar_inventario(jogador["inventario"])
@@ -248,11 +248,6 @@ Você planta os pés e ergue sua arma bem no momento em que o zumbi corredor se 
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nO zumbi corredor finalmente para de se mexer. Sua respiração ainda está descompassada.")
-                print("Ao se recompor, você percebe uma pequena mochila escolar caída perto do corpo, com um kit de primeiros socorros dentro.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("kit de primeiros socorros", "cura", "restaura vida", 1, restaura_vida=20),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -263,13 +258,7 @@ Você planta os pés e ergue sua arma bem no momento em que o zumbi corredor se 
 Você dispara em direção ao prédio mais próximo, os pulmões ardendo.
 
 Na última fração de segundo, você entra e consegue trancar a porta enferrujada, ouvindo o zumbi bater do outro lado até desistir e seguir em frente.
-
-Enquanto espera o silêncio voltar, você vasculha as prateleiras do apartamento e encontra uma garrafa de refrigerante ainda fechada.
 """)
-            inventario.adicionar_item_inventario(
-                jogador["inventario"],
-                itens.criar_recurso("refrigerante", "bebida", "restaura 15 de sede", 1, restaura_sede=15),
-            )
             break
         else:
             print("Opção inválida. Tente novamente.")
@@ -309,7 +298,7 @@ Não há como passar despercebido por aquela coisa. Você se posiciona entre as 
                 print("\nCom o caminho livre, você finalmente alcança a farmácia e encontra alguns suprimentos médicos.")
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("kit médico", "cura", "restaura vida", 1, restaura_vida=30, bonus_resistencia=1),
+                    itens.criar_recurso("kit médico", "cura", "restaura 30 de vida", 1, restaura_vida=30, bonus_resistencia=1),
                 )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
@@ -359,11 +348,6 @@ Você respira fundo e avança, tentando aproveitar o elemento surpresa antes que
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nO gigante finalmente desaba entre os carros. A ponte está livre.")
-                print("Revistando os veículos militares, você encontra um colete tático ainda utilizável.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("colete tático", "equipamento", "reforça sua proteção", 1, bonus_resistencia=3),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -412,11 +396,6 @@ Não há espaço para recuar nesse corredor estreito. Você segura sua arma com 
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nA criatura finalmente para de se mexer, afundando lentamente na água escura.")
-                print("Preso em uma grade próxima, você encontra um kit de sutura improvisado, ainda seco dentro de um saco plástico.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("kit de sutura", "cura", "restaura vida", 1, restaura_vida=20),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -561,18 +540,6 @@ Não existe espaço para hesitar. Você desce o túnel, sabendo que talvez essa 
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nO Zumbi Supremo finalmente cai, e o silêncio do bunker toma conta do túnel. Você está exausto, mas vivo.")
-                print("Dentro do bunker, os armários de emergência ainda guardam suprimentos intactos.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("ração militar", "comida", "restaura fome e sede", 2, restaura_fome=25, restaura_sede=10),
-                    mostrar=False,
-                )
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("kit médico avançado", "cura", "restaura vida", 1, restaura_vida=35),
-                    mostrar=False,
-                )
-                inventario.mostrar_inventario(jogador["inventario"])
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -685,12 +652,7 @@ Você avança para afastar os infectados antes que eles percebam o sobrevivente.
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nO sobrevivente agradece e se apresenta como Caio. Ele diz conhecer uma entrada de serviço do Complexo Éden.")
-                print("Como forma de agradecimento, Caio divide um pouco de sua comida enlatada com você.")
                 jogador["aliado"] = "Caio"
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("comida enlatada", "comida", "restaura 15 de fome", 1, restaura_fome=15),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -741,7 +703,7 @@ Você escolhe não abandonar uma chance de conseguir recursos. Entre os veículo
                 )
                 inventario.adicionar_item_inventario(
                     jogador["inventario"],
-                    itens.criar_recurso("bandagem", "cura", "restaura vida", 1, restaura_vida=15),
+                    itens.criar_recurso("bandagem", "cura", "restaura 15 de vida", 1, restaura_vida=15),
                     mostrar=False,
                 )
                 inventario.mostrar_inventario(jogador["inventario"])
@@ -787,11 +749,6 @@ O saqueador avança, convencido de que você será apenas mais uma pessoa a entr
             resultado = combate.iniciar_combate(jogador, inimigo, combate.OPCOES_CONFRONTO_DIRETO)
             if resultado is True:
                 print("\nCom a passagem livre, você escuta o líder do grupo gritar: \"Peguem a amostra antes que ela saia de lá!\"")
-                print("Você recolhe a faca que o saqueador derrubou no chão.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_item("faca de saqueador", "arma", 14, "dano médio-alto", 1),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -886,11 +843,6 @@ As luzes de emergência piscam enquanto você se prepara. A cada segundo, mais p
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nVocê atravessa o corredor antes que as portas pesadas se fechem.")
-                print("O uniforme do segurança ainda tem um cassetete preso ao cinto. Você o pega antes de seguir em frente.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_item("cassetete de segurança", "arma", 18, "dano alto", 1),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -935,11 +887,6 @@ Você precisa das respostas antes de decidir o que fazer com a cura. O pesquisad
             resultado = combate.iniciar_combate(jogador, inimigo)
             if resultado is True:
                 print("\nNos arquivos, você confirma: a amostra E-01 pode ser reproduzida e transformada em novas doses.")
-                print("Em uma bancada próxima, você encontra uma seringa de adrenalina intacta.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_recurso("seringa de adrenalina", "cura", "restaura vida rapidamente", 1, restaura_vida=25),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
@@ -957,9 +904,7 @@ Você não tem tempo para mais perguntas. A câmara central é a única coisa qu
 
 def fase18(jogador):
     print("\nFASE 18 — A TRAIÇÃO")
-    aliado = None
-    if "aliado" in jogador:
-        aliado = jogador["aliado"]
+    aliado = jogador.get("aliado")
     if aliado:
         texto = (f"""
 Você encontra {aliado} diante da porta da câmara central. Ele parece aliviado por você ter chegado até ali.
@@ -1000,11 +945,6 @@ Você não pode deixar que a única chance de criar uma cura fique nas mãos de 
             resultado = combate.iniciar_combate(jogador, inimigo, combate.OPCOES_CONFRONTO_DIRETO)
             if resultado is True:
                 print("\nO caminho até a câmara está livre, mas o alarme de contenção começa a tocar por toda a instalação.")
-                print(f"Você recolhe a arma que {nome_inimigo} carregava — pesada, mas eficaz.")
-                inventario.adicionar_item_inventario(
-                    jogador["inventario"],
-                    itens.criar_item("arma improvisada reforçada", "arma", 22, "dano muito alto", 1),
-                )
             elif resultado is False:
                 print("\nSua jornada termina aqui.")
             elif resultado is None:
